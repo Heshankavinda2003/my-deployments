@@ -21,8 +21,9 @@ import {
 import { MdOutlineMailOutline } from "react-icons/md";
 import { RiLockPasswordFill } from "react-icons/ri";
 
-const API_BASE_URL =
-  import.meta.env.VITE_API_URL || "http://localhost:5000";
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL
+  ? import.meta.env.VITE_API_BASE_URL.replace(/\/api\/?$/, '')
+  : (import.meta.env.VITE_API_URL || "http://localhost:5000");
 
 const LoginForm = ({ onLoginSuccess }) => {
   const [email, setEmail] = useState("");

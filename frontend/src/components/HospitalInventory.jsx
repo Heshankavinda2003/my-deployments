@@ -4,7 +4,8 @@ import {
   FaTrash, FaBoxOpen, FaLayerGroup, FaHistory 
 } from 'react-icons/fa';
 
-const API_URL = 'http://localhost:5000/api/medicines';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api';
+const API_URL = `${API_BASE_URL}/medicines`;
 
 // Helper function to calculate similarity score between two strings (0.0 to 1.0)
 const getFuzzyScore = (str1, str2) => {

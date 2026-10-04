@@ -7,6 +7,8 @@ import StaffModal from "../components/admin/staff/StaffModal";
 import StaffTable from "../components/admin/staff/StaffTable";
 import ViewStaffModal from "../components/admin/staff/ViewStaffModal";
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api';
+
 export default function StaffTasks() {
   const [staff, setStaff] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -29,7 +31,7 @@ export default function StaffTasks() {
   const fetchStaff = async () => {
     try {
       setLoading(true);
-      const res = await axios.get("http://localhost:5000/api/admin/staff", authHeader);
+      const res = await axios.get(`${API_BASE_URL}/admin/staff`, authHeader);
       
       const formatted = res.data.map((member) => ({
         id: member._id,
@@ -59,7 +61,7 @@ export default function StaffTasks() {
   // Add new staff
   const addStaff = async (newStaff) => {
     try {
-      await axios.post("http://localhost:5000/api/admin/staff", newStaff, authHeader);
+      await axios.post(`${API_BASE_URL}/admin/staff`, newStaff, authHeader);
       fetchStaff();
       setOpenModal(false);
     } catch (err) {
@@ -84,7 +86,7 @@ export default function StaffTasks() {
   const updateStaff = async (updatedStaff) => {
     try {
       await axios.put(
-        `http://localhost:5000/api/admin/staff/${updatedStaff.id || updatedStaff._id}`,
+        `${API_BASE_URL}/admin/staff/${updatedStaff.id || updatedStaff._id}`,
         updatedStaff,
         authHeader
       );
@@ -101,7 +103,7 @@ export default function StaffTasks() {
   const deleteStaff = async (id) => {
     if (window.confirm("Are you sure you want to delete this staff member?")) {
       try {
-        await axios.delete(`http://localhost:5000/api/admin/staff/${id}`, authHeader);
+        await axios.delete(`${API_BASE_URL}/admin/staff/${id}`, authHeader);
         fetchStaff();
       } catch (err) {
         alert("Failed to delete staff member.");

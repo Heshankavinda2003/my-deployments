@@ -7,6 +7,8 @@ import DoctorModal from "../components/admin/doctors/DoctorModal";
 import DoctorTable from "../components/admin/doctors/DoctorTable";
 import ViewDoctorModal from "../components/admin/doctors/ViewDoctorModal";
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api';
+
 export default function DoctorsTask() {
   const [doctors, setDoctors] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -29,7 +31,7 @@ export default function DoctorsTask() {
   const fetchDoctors = async () => {
     try {
       setLoading(true);
-      const res = await axios.get("http://localhost:5000/api/admin/doctors", authHeader);
+      const res = await axios.get(`${API_BASE_URL}/admin/doctors`, authHeader);
       
       const formatted = res.data.map((doc) => ({
         id: doc._id,
@@ -60,7 +62,7 @@ export default function DoctorsTask() {
   // Add new doctor
   const addDoctor = async (newDoctor) => {
     try {
-      await axios.post("http://localhost:5000/api/admin/doctors", newDoctor, authHeader);
+      await axios.post(`${API_BASE_URL}/admin/doctors`, newDoctor, authHeader);
       fetchDoctors();
       setOpenModal(false);
     } catch (err) {
@@ -85,7 +87,7 @@ export default function DoctorsTask() {
   const updateDoctor = async (updatedDoctor) => {
     try {
       await axios.put(
-        `http://localhost:5000/api/admin/doctors/${updatedDoctor.id || updatedDoctor._id}`,
+        `${API_BASE_URL}/admin/doctors/${updatedDoctor.id || updatedDoctor._id}`,
         updatedDoctor,
         authHeader
       );
@@ -102,7 +104,7 @@ export default function DoctorsTask() {
   const deleteDoctor = async (id) => {
     if (window.confirm("Are you sure you want to delete this doctor?")) {
       try {
-        await axios.delete(`http://localhost:5000/api/admin/doctors/${id}`, authHeader);
+        await axios.delete(`${API_BASE_URL}/admin/doctors/${id}`, authHeader);
         fetchDoctors();
       } catch (err) {
         alert("Failed to delete doctor.");

@@ -3,6 +3,8 @@ import { FaPlusSquare, FaPhoneAlt, FaPrint, FaDownload, FaUserShield } from "rea
 import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api';
+
 const RegistrationPatient = () => {
   const initialFormState = {
     fullName: '',
@@ -52,7 +54,7 @@ const RegistrationPatient = () => {
       const generatedTempQR = `MEDNET-VALIDATION-NODE-${formData.nic || Date.now()}`;
 
       const response = await axios.post(
-        'http://localhost:5000/api/auth/register',
+        `${API_BASE_URL}/auth/register`,
         {
           role: 'Patient',
           fullName: formData.fullName,

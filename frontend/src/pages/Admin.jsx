@@ -16,6 +16,8 @@ import StaffTask from "./StaffTask";
 
 import { FaUsers, FaUserMd, FaUserNurse } from "react-icons/fa";
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api';
+
 // Main Dashboard View Component
 function AdminDashboardView() {
   const [dashboard, setDashboard] = useState({
@@ -41,7 +43,7 @@ function AdminDashboardView() {
       try {
         setLoading(true);
         const token = localStorage.getItem("token");
-        const response = await axios.get("http://localhost:5000/api/admin/dashboard", {
+        const response = await axios.get(`${API_BASE_URL}/admin/dashboard`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setDashboard(response.data);

@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api';
+
 export default function UpdateRecords() {
   const [patientId, setPatientId] = useState("");
   const [formData, setFormData] = useState({
@@ -21,7 +23,7 @@ export default function UpdateRecords() {
     setMessage("");
     try {
       // Backend Endpoint: GET /api/patients/:id
-      const response = await fetch(`/api/patients/${patientId}`);
+      const response = await fetch(`${API_BASE_URL}/patients/${patientId}`);
       if (!response.ok) throw new Error("Patient not found!");
       
       const data = await response.json();
@@ -45,7 +47,7 @@ export default function UpdateRecords() {
     setLoading(true);
     try {
       // Backend Endpoint: PUT /api/patients/:id
-      const response = await fetch(`/api/patients/${patientId}`, {
+      const response = await fetch(`${API_BASE_URL}/patients/${patientId}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
